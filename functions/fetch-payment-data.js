@@ -55,7 +55,7 @@ const addExtraFields = (rentPayments) => {
 
 const baseurl = `https://secure.epaydatagateway.com/api/query.php?security_key=${process.env.SECURITY_KEY}`;
 
-const handler = async () => {
+const handler = async (event) => {
   if (
     event.headers["x-api-key"] &&
     event.headers["x-api-key"] === process.env.API_KEY
