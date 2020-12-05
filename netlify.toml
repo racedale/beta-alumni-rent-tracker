@@ -1,6 +1,6 @@
 [build]
-  functions = "functions/"
   command = "cd functions && npm ci && cd .. && npm run build"
+  functions = "functions/"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
