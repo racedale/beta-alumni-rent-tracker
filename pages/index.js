@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Header from "@components/Header";
-import mockData from "./mock-data";
+import axios from "axios";
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div className="container">
       <Head>
@@ -12,8 +12,6 @@ export default function Home() {
 
       <main>
         <Header title="Beta Alumni Rent Payment Tracker" />
-
-        {/* {console.log(mockData)} */}
 
         <table>
           <tbody>
@@ -26,7 +24,7 @@ export default function Home() {
               <th>amount</th>
               <th>response_text</th>
             </tr>
-            {mockData.map((row) => {
+            {props.paymentData.map((row) => {
               return (
                 <tr
                   key={row.transaction_id}
@@ -52,4 +50,26 @@ export default function Home() {
       </main>
     </div>
   );
+}
+
+import mockData from "./mock-data";
+
+export async function getServerSideProps(context) {
+  const response = await axios.get(
+    `https://beta-alumni-rent-tracker.netlify.app/.netlify/functions/map-payments-to-csv`
+  );
+  const data = response.data;
+  // const data = mockData;
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      paymentData: data,
+    }, // will be passed to the page component as props
+  };
 }
