@@ -56,7 +56,12 @@ import mockData from "./mock-data";
 
 export async function getServerSideProps(context) {
   const response = await axios.get(
-    `https://beta-alumni-rent-tracker.netlify.app/.netlify/functions/map-payments-to-csv`
+    `https://beta-alumni-rent-tracker.netlify.app/.netlify/functions/map-payments-to-csv`,
+    {
+      headers: {
+        "x-api-key": process.env.API_KEY,
+      },
+    }
   );
   const data = response.data;
   // const data = mockData;

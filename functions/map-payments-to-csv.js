@@ -15,39 +15,55 @@ const mapForCSV = (input) => {
   return Object.values(input).flat();
 };
 
-const handler = async () => {
-  const response = await axios.get(
-    "https://beta-alumni-rent-tracker.netlify.app/.netlify/functions/fetch-payment-data"
-  );
-  const rentPayments = response.data;
-  const csvData = mapForCSV(rentPayments);
-
-  if (process.env.ENV === "local") {
-    const { stringify } = require("csv");
-    stringify(
-      mapForCSV(rentPayments),
+const handler = async (event) => {
+  if (
+    event.headers["x-api-key"] &&
+    event.headers["x-api-key"] === process.env.API_KEY
+  ) {
+    console.log(event);
+    const response = await axios.get(
+      "https://beta-alumni-rent-tracker.netlify.app/.netlify/functions/fetch-payment-data",
       {
-        columns: [
-          "transaction_id",
-          "firstName",
-          "lastName",
-          "email",
-          "phone",
-          "date",
-          "amount",
-          "response_text",
-        ],
-        header: true,
-      },
-      (err, output) => {
-        require("fs").writeFileSync("rent-payments.csv", output);
+        headers: {
+          "x-api-key": process.env.API_KEY,
+        },
       }
     );
+    const rentPayments = response.data;
+    const csvData = mapForCSV(rentPayments);
+
+    if (process.env.ENV === "local") {
+      const { stringify } = require("csv");
+      stringify(
+        mapForCSV(rentPayments),
+        {
+          columns: [
+            "transaction_id",
+            "firstName",
+            "lastName",
+            "email",
+            "phone",
+            "date",
+            "amount",
+            "response_text",
+          ],
+          header: true,
+        },
+        (err, output) => {
+          require("fs").writeFileSync("rent-payments.csv", output);
+        }
+      );
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify(csvData),
+    };
+  } else {
+    return {
+      statusCode: 401,
+      body: "Unauthenticated",
+    };
   }
-  return {
-    statusCode: 200,
-    body: JSON.stringify(csvData),
-  };
 };
 if (process.env.ENV === "local") {
   handler();

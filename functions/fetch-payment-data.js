@@ -56,39 +56,49 @@ const addExtraFields = (rentPayments) => {
 const baseurl = `https://secure.epaydatagateway.com/api/query.php?security_key=${process.env.SECURITY_KEY}`;
 
 const handler = async () => {
-  const rentPayments = await axios
-    .post(
-      `${baseurl}&date_search=created,updated&start_date=20200801000000&end_date=20201231232359`
-    )
-    .then(async (response) => {
-      const json = await parser.parseStringPromise(response.data);
-      const transactions = json.nm_response.transaction;
-      return transactions.reduce((acc, next) => {
-        const person = `${next.first_name
-          .toString()
-          .toLowerCase()}_${next.last_name.toString().toLowerCase()}`;
-        if (acc[person]) {
-          acc[person] = [...acc[person], parsePerson(next)];
-        } else {
-          acc[person] = [parsePerson(next)];
-        }
-        return acc;
-      }, {});
-    })
-    .catch((error) => console.error(error.message));
+  if (
+    event.headers["x-api-key"] &&
+    event.headers["x-api-key"] === process.env.API_KEY
+  ) {
+    const rentPayments = await axios
+      .post(
+        `${baseurl}&date_search=created,updated&start_date=20200801000000&end_date=20201231232359`
+      )
+      .then(async (response) => {
+        const json = await parser.parseStringPromise(response.data);
+        const transactions = json.nm_response.transaction;
+        return transactions.reduce((acc, next) => {
+          const person = `${next.first_name
+            .toString()
+            .toLowerCase()}_${next.last_name.toString().toLowerCase()}`;
+          if (acc[person]) {
+            acc[person] = [...acc[person], parsePerson(next)];
+          } else {
+            acc[person] = [parsePerson(next)];
+          }
+          return acc;
+        }, {});
+      })
+      .catch((error) => console.error(error.message));
 
-  addExtraFields(rentPayments);
-  if (process.env.ENV === "local") {
-    // TODO: write to file
-    require("fs").writeFileSync(
-      "rent-payments.json",
-      JSON.stringify(rentPayments, null, 2)
-    );
+    addExtraFields(rentPayments);
+    if (process.env.ENV === "local") {
+      // TODO: write to file
+      require("fs").writeFileSync(
+        "rent-payments.json",
+        JSON.stringify(rentPayments, null, 2)
+      );
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify(rentPayments),
+    };
+  } else {
+    return {
+      statusCode: 401,
+      body: "Unauthenticated",
+    };
   }
-  return {
-    statusCode: 200,
-    body: JSON.stringify(rentPayments),
-  };
 };
 
 if (process.env.ENV === "local") {
