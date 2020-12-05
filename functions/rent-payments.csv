@@ -1,0 +1,25 @@
+transaction_id,firstName,lastName,email,phone,date,amount,response_text
+5548776970,Caleb,James,,,2020/08/04,225.00,Approved
+5613451596,Caleb,James,,,2020/09/01,315.00,Approved
+5685148464,Caleb,James,csj1111@truman.edu,8165063988,2020/10/01,315.00,Approved
+5760615468,Caleb,James,csj1111@truman.edu,8165063988,2020/11/03,225.00,Approved
+5566101112,Brandon,Jones,,,2020/08/12,450.00,Approved
+5644654603,Brandon,Jones,bjj4614@truman.edu,2176919751,2020/09/14,225.00,Approved
+5713786424,Brandon,Jones,bjj4614@truman.edu,2176919751,2020/10/14,225.00,Approved
+5632413693,Charan,Dyavanapalli,vd6843@truman.edu,6365440565,2020/09/09,225.00,Approved
+5640212974,Charan,Dyavanapalli,vd6843@truman.edu,6365440565,2020/09/12,90.00,Approved
+5704786599,Charan,Dyavanapalli,vd6843@truman.edu,6365440565,2020/10/10,315.00,Insufficient funds
+5704787945,Charan,Dyavanapalli,vd6843@truman.edu,6365440565,2020/10/10,315.00,Approved
+5778773131,Charan,Dyavanapalli,vd6843@truman.edu,6365440565,2020/11/11,315.00,Approved
+5632475391,Nathan,Wunderlich,Ncw3623@truman.edu,2054519230,2020/09/09,225.00,Approved
+5641967168,Nathan,Wunderlich,Ncw3623@truman.edu,2054519230,2020/09/13,90.00,Approved
+5632542627,Jackson,Dunn,jackwdunn101@gmail.com,6363457563,2020/09/09,225.00,Approved
+5633334558,jackson,dunn,jackwdunn101@gmail.com,6363457563,2020/09/10,90.00,Approved
+5778998585,Jackson,Dunn,togetrolandsalt@gmail.com,6363457569,2020/11/11,655.00,Approved
+5632683542,Anthony,Wheeler,anthonywheeler79@gmail.com,8166958018,2020/09/09,315.00,Approved
+5695508272,Anthony,Wheeler,anthonywheeler79@gmail.com,8166958018,2020/10/06,315.00,Approved
+5759786889,Anthony,Wheeler,anthonywheeler79@gmail.com,8166958018,2020/11/03,315.00,Approved
+5834679850,Anthony,Wheeler,anthonywheeler79@gmail.com,8166958018,2020/12/03,315.00,Approved
+5633058317,matthew,Hellmann,mch5428@truman.edu,6364326178,2020/09/09,225.00,Approved
+5703536099,matthew,Hellmann,mch5428@truman.edu,6364326178,2020/10/09,315.00,Approved
+5777924518,matthew,Hellmann,mch5428@truman.edu,6364326178,2020/11/10,315.00,Approved
