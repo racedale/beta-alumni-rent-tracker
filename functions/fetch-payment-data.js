@@ -62,7 +62,7 @@ const handler = async (event) => {
   ) {
     const rentPayments = await axios
       .post(
-        `${baseurl}&date_search=created,updated&start_date=20200801000000&end_date=20210531232359`
+        `${baseurl}&date_search=created,updated&start_date=20210801000000&end_date=20220531232359`
       )
       .then(async (response) => {
         const json = await parser.parseStringPromise(response.data);
